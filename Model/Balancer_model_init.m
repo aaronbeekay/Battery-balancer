@@ -27,7 +27,7 @@ charger_cv_setpoint =	PACK_SIZE * 4.11;				% Constant-voltage setpoint, V
 % CHARGE_OFF_SAFETY_MAX_VOLT
 %	The controller will forcibly disable bulk charging (disconnect AC
 %	power) when any cell reaches this voltage.
-CHARGE_OFF_SAFETY_MAX_VOLT	= 4.15;
+CHARGE_OFF_SAFETY_MAX_VOLT	= 4.18;
 
 % CHARGE_ON_MAX_VOLT
 %	Maximum cell voltage during bulk charging. The controller will disable
@@ -43,7 +43,7 @@ CHARGE_ON_MAX_VOLT			= 4.10;
 %	To avoid oscillation, this parameter should be set greater than 
 %	approx. (Ibulk) * Ri, where Ibulk is the DC charge current setpoint and
 %	Ri is the typical internal resistance of a series cell at high SOC.
-CHARGE_ON_VOLT_TOL			= 0.3;
+CHARGE_ON_VOLT_TOL			= 0.05;
 
 % BALANCE_MIN_VOLT_THRESH
 %	The minimum voltage that a cell should have in order to be eligible for
@@ -55,7 +55,7 @@ BALANCE_MIN_VOLT_THRESH		= 3.0;
 %	If a cell is not currently balancing, it must be more than
 %	BALANCE_ON_VOLT_TOL volts above the lowest cell in order to begin being
 %	balanced.
-BALANCE_ON_VOLT_TOL			= 0.06;
+BALANCE_ON_VOLT_TOL			= 0.025;
 
 % BALANCE_OFF_VOLT_TOL
 %	Voltage difference threshold required to disable balancing for a cell.
@@ -65,7 +65,7 @@ BALANCE_ON_VOLT_TOL			= 0.06;
 %
 %	If this value is negative, a balancing cell will be balanced until it
 %	has a lower voltage (under load) than the minimum non-balancing cell.
-BALANCE_OFF_VOLT_TOL		= -0.04;
+BALANCE_OFF_VOLT_TOL		= -0.05;
 
 % BALANCE_RELAXATION_TIME
 %	document
