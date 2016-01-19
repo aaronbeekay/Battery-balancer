@@ -33,27 +33,30 @@ balance_command		= balance_command.Values;
 
 % Terminal voltages and balancing target
 figure(1); clf;
-ax1 = subplot(211);
+ax1 = gca;
 	% Voltages
 	plot(Vc)
-	ylim([3.2 4.2]);
+	ylim([3.5 4.2]);
 	
-ax2 = subplot(212);
-	% Balancing target
-	MinCell			=	Vc;
-	BalMask			=	squeeze(balance_command.Data(1,:,:))'.*100 + 1;
-	MinCell.Data	=	min(MinCell.Data .* BalMask, [], 2);
-	MinCell.Name	=	'Balance target voltage';
+	voltage_imbalance(1) = max(Vc.Data(2,:)) - min(Vc.Data(2,:));
+	voltage_imbalance(2) = max(Vc.Data(end,:)) - min(Vc.Data(end,:));
 	
-	plot(MinCell, 'LineWidth', 1.5);
-	ylim([3.2 4.2]);
-	clear BalMask;
+	imbalance_stats_string = sprintf( ['Initial voltage imbalance: %.3f V \n '	...
+										'Final voltage imbalance: %.3f V' ],	...
+										voltage_imbalance(1),					...
+										voltage_imbalance(2)					);
+									
+	annotation( 'textbox', [0.2 0.2 0.1 0.1],		...
+				'String', imbalance_stats_string,	...
+				'FitBoxToText', 'on'				);
+			
+	clear voltage_imbalance imbalance_stats_string;
 	
 
 % State-of-charge
 figure(2); clf; hold on;
 	plot(SOC);
-	ax3 = gca;
+	ax2 = gca;
 
 	% Overlay indicators when cell is balancing
 	for i = 1:PACK_SIZE
@@ -64,8 +67,7 @@ figure(2); clf; hold on;
 	
 	clear bal_data soc_data;
 	
-linkaxes([ax1 ax2 ax3], 'x');
-linkaxes([ax1 ax2], 'y');
+linkaxes([ax1 ax2], 'x');
 
 % Balance power
 Pbal		= Vc;
