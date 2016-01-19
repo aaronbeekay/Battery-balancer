@@ -20,8 +20,8 @@ load('Samsung-25R', 'Voc', 'R1', 'C1');					% Load OCV curve and cell parameters
 Rbalance			=	0.69;							% Balance resistor value, ohm
 
 %% Charger parameters
-%Ibulk				=	10;								% Bulk charge current setpoint, amp
-Ibulk				=	0;								% Disable charging
+Ibulk				=	10;								% Bulk charge current setpoint, amp
+charger_cv_setpoint =	PACK_SIZE * 4.11;				% Constant-voltage setpoint, V
 
 %% Control parameters
 % CHARGE_OFF_SAFETY_MAX_VOLT
@@ -70,3 +70,8 @@ BALANCE_OFF_VOLT_TOL		= -0.04;
 % BALANCE_RELAXATION_TIME
 %	document
 BALANCE_RELAXATION_TIME		= 5;
+
+% CHARGE_DISABLE
+%	If this parameter is true, the controller will never attempt to enable
+%	bulk charging.
+CHARGE_DISABLE				= false;
