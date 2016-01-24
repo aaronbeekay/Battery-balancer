@@ -25,4 +25,10 @@
 		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>CONTROLSUITE_F2803x_INSTALL</name>
+			<value>$%7BTI_PRODUCTS_DIR%7D/controlSUITE/device_support/f2803x/v130</value>
+		</variable>
+	</variableList>
 </projectDescription>

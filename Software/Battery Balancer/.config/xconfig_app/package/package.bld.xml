@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="xconfig_app" version="" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="package/cfg/app_p28L.c"/>
+    </sources>
+    <configscripts>
+        <srcFile name="C:/Users/Sean Harrington/Documents/Buckeye Current/CCS/Battery Balancer/Software/Battery Balancer/app.cfg"/>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/cfg/app_p28L.mak" src="package.bld"/>
+        <srcFile name="package/cfg/app_p28L.o28L.dep" src="package/cfg/app_p28L.c"/>
+        <srcFile name="package/cfg/app_p28L.dep" src="package/cfg/app_p28L.cfg"/>
+        <srcFile name="package/cfg/app.x28L.mak" src="package.bld"/>
+        <srcFile name="package/rel/xconfig_app.tar.dep" src="package/rel/xconfig_app.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.C28_large"
+            version="ti.targets.C28_large{1,0,6.4,9"
+            rawVersion="6.4.9"
+            platform="ti.platforms.sim28xx"
+            isa="28"
+            suffix="28L"
+            rootDir="C:/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.9"
+            os="undefined"
+            rts="ti.targets.rts2800">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="large"/>
+        </target>
+    </targets>
+    <libraries>
+    </libraries>
+    <configurations>
+    <configuration name="app"
+        pname="app.p28L"
+        target="ti.targets.C28_large"
+        platform="ti.platforms.tms320x28:TMS320F28035"
+        profile="release"
+        isPartial="false"
+        xCfgScript="package/cfg/app_p28L.cfg"
+        xCfgPrefix="package/cfg/app_p28L"
+        cfgScript="C:/Users/Sean Harrington/Documents/Buckeye Current/CCS/Battery Balancer/Software/Battery Balancer/app.cfg"
+        cfgArgs="null"
+        />
+    </configurations>
+    <executables>
+    <executable name="app"
+        pname="app.x28L"
+        target="ti.targets.C28_large"
+        platform="ti.platforms.tms320x28:TMS320F28035"
+        profile="release"
+        xCfgScript="package/cfg/app_p28L.cfg"
+        xCfgPrefix="package/cfg/app_p28L"
+        cfgScript="C:/Users/Sean Harrington/Documents/Buckeye Current/CCS/Battery Balancer/Software/Battery Balancer/app.cfg"
+        cfgArgs="null"
+        />
+    </executables>
+    <tests>
+    <test exeName="app.x28L"
+        args=""
+        groupName="app.x28L"
+        refOutput="undefined"
+        refExitCode="0"
+        execArgs=""
+        />
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="xconfig_app"
+        pname="xconfig_app.tar"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

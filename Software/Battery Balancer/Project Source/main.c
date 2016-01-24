@@ -2,14 +2,24 @@
  *  ======== main.c ========
  */
 
-#include <xdc/std.h>
+//----------------------------------------
+// BIOS header files
+//----------------------------------------
+
+#include "Common_Includes.h"
 
 #include <xdc/runtime/Error.h>
 #include <xdc/runtime/System.h>
+#include <xdc/cfg/global.h> 				//header file for statically defined objects/handles
 
-#include <ti/sysbios/BIOS.h>
-
+#include <ti/sysbios/BIOS.h>				//mandatory - if you call APIs like BIOS_start()
 #include <ti/sysbios/knl/Task.h>
+
+//-----------------------------------------
+// ControlSuite Header Files
+//-----------------------------------------
+
+#include "Initialize.h"
 
 /*
  *  ======== taskFxn ========
@@ -30,6 +40,9 @@ Void taskFxn(UArg a0, UArg a1)
  */
 Int main()
 { 
+	HardwareInit();
+
+	// @todo: Determine if I should keep default project code
     Task_Handle task;
     Error_Block eb;
 
@@ -45,3 +58,5 @@ Int main()
     BIOS_start();    /* does not return */
     return(0);
 }
+
+
