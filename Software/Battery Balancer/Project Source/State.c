@@ -1,15 +1,16 @@
 /*
- * I2C_Coms.c
+ * State.c
  *
- *  Created on: Jan 23, 2016
+ *  Created on: Jan 24, 2016
  *      Author: Sean Harrington
  */
+
 
 //-----------------------------------------------------------------------
 // Includes
 //-----------------------------------------------------------------------
 
-#include "I2C_Coms.h"
+#include "State.h"
 
 //-----------------------------------------------------------------------
 // Global variables
@@ -23,6 +24,14 @@
 // Private variables
 //-----------------------------------------------------------------------
 
+typedef struct
+{
+	enum STATES balancer_state;
+	Bool initialized;
+} balancer_state_t;
+
+static balancer_state_t system_state;
+
 //-----------------------------------------------------------------------
 // Private (Internal) functions
 //-----------------------------------------------------------------------
@@ -31,20 +40,22 @@
 // Public functions
 //-----------------------------------------------------------------------
 
-Void I2C_Init()
+Void InitializeState()
 {
-	/*
-	EALLOW;
+	system_state.balancer_state = WAIT;
+	system_state.initialized = TRUE;
+}
 
-   // Enable I2C-A on GPIO32 - GPIO33
-   GpioCtrlRegs.GPBPUD.bit.GPIO32 = 0;   // Enable pullup on GPIO32
-   GpioCtrlRegs.GPBMUX1.bit.GPIO32 = 1;  // GPIO32 = SDAA
-   GpioCtrlRegs.GPBQSEL1.bit.GPIO33 = 3; // Asynch input
-   GpioCtrlRegs.GPBPUD.bit.GPIO33 = 0;   // Enable pullup on GPIO33
-   GpioCtrlRegs.GPBQSEL1.bit.GPIO33 = 3; // Asynch input
-   GpioCtrlRegs.GPBMUX1.bit.GPIO33 = 1;  // GPIO33 = SCLA
+state GetState()
+{
+	// Check if initialized. Throw error if not.
+	return system_state.balancer_state;
+}
 
-   EDIS;
-   return;
-   */
+Bool SetState(state nextState)
+{
+	// Semaphore for safety?
+	// Check for value of nextState to see if within bounds?
+	system_state.balancer_state = nextState;
+	return TRUE;
 }

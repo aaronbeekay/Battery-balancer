@@ -10,4 +10,5 @@
 	<rts value="libc.a"/>
 	<createSlaveProjects value=""/>
 	<templateProperties value="id=com.ti.rtsc.TIRTOSc2000.example_8,type=rtsc,products=com.ti.rtsc.TIRTOSc2000,platform=ti.platforms.tms320x28:$DeviceId$,buildProfile=release,isHybrid=true,configuroOptions=--compileOptions &quot;-g --optimize_with_debug&quot;,"/>
+	<isTargetManual value="false"/>
 </projectOptions>

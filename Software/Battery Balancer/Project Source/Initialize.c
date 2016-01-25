@@ -18,11 +18,12 @@
 //-----------------------------------------------------------------------
 // Global variables
 //-----------------------------------------------------------------------
+/*
 extern Uint16 RamfuncsLoadStart;
 extern Uint16 RamfuncsLoadEnd;
 extern Uint16 RamfuncsRunStart;
 extern Uint16 RamfuncsLoadSize;
-
+*/
 //-----------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------
@@ -49,10 +50,10 @@ extern Uint16 RamfuncsLoadSize;
 //-----------------------------------------------------------------------
 void HardwareInit()
 {
-	InitSysCtrl();
+	/*InitSysCtrl();
 	memcpy(&RamfuncsRunStart,&RamfuncsLoadStart,(unsigned long)&RamfuncsLoadSize);
 	InitFlash();
-
+	*/
 	Gpio_Init();
 	// @todo: I2C setup
 	// @todo: CAN setup

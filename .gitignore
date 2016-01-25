@@ -2,3 +2,5 @@ Model/slprj
 *.autosave
 *.mexmaci64
 Software/Battery Balancer/Debug/
+Software/.config/
+Software/.launches/
