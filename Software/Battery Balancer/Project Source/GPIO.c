@@ -10,6 +10,8 @@
 //-----------------------------------------------------------------------
 #include "GPIO.h"
 #include "State.h"
+#include "Events.h"
+
 //-----------------------------------------------------------------------
 // Global variables
 //-----------------------------------------------------------------------
@@ -94,38 +96,44 @@ Void HWI_Switch_Service()
 {
 	if (GpioDataRegs.GPADAT.bit.GPIO12 == 1)
 	{
+		/*
 		GpioDataRegs.GPASET.bit.GPIO9 = 1;
 		GpioDataRegs.GPBCLEAR.bit.GPIO34 = 1;
 		GpioDataRegs.GPBCLEAR.bit.GPIO41 = 1;
 		GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;
-		SetState(CHARGE);
+		*/
+		Event_post(StateChangeEvent, WAIT_EVENT);
 	}
 	if (GpioDataRegs.GPADAT.bit.GPIO12 == 1 &&
 			GpioDataRegs.GPADAT.bit.GPIO13 == 1)
 	{
+		/*
 		GpioDataRegs.GPACLEAR.bit.GPIO9 = 1;
 		GpioDataRegs.GPBCLEAR.bit.GPIO34 = 1;
 		GpioDataRegs.GPBCLEAR.bit.GPIO41 = 1;
 		GpioDataRegs.GPASET.bit.GPIO11 = 1;
-		SetState(BALANCE);
+		*/
+		Event_post(StateChangeEvent, CHARGE_EVENT);
 	}
 	if (GpioDataRegs.GPADAT.bit.GPIO12 == 1 &&
 			GpioDataRegs.GPADAT.bit.GPIO14 == 1)
 	{
+		/*
 		GpioDataRegs.GPACLEAR.bit.GPIO9 = 1;
 		GpioDataRegs.GPBSET.bit.GPIO34 = 1;
 		GpioDataRegs.GPBCLEAR.bit.GPIO41 = 1;
 		GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;
-		SetState(CHARGE_BALANCE);
+		*/
 	}
 	if (GpioDataRegs.GPADAT.bit.GPIO12 == 1 &&
 			GpioDataRegs.GPADAT.bit.GPIO15 == 1)
 	{
+		/*
 		GpioDataRegs.GPACLEAR.bit.GPIO9 = 1;
 		GpioDataRegs.GPBCLEAR.bit.GPIO34 = 1;
 		GpioDataRegs.GPBSET.bit.GPIO41 = 1;
 		GpioDataRegs.GPACLEAR.bit.GPIO11 = 1;
-		SetState(WAIT);
+		*/
 	}
 }
 

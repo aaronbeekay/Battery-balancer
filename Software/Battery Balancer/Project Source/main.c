@@ -20,14 +20,10 @@
 //-----------------------------------------
 
 #include "Initialize.h"
+#include "State.h"
 
 // @todo: Document events
-#define WAIT_EVENT				0x1
-#define CHARGE_EVENT 			0x2
-#define BALANCE_EVENT 			0x4
-#define CHARGE_BALANCE_EVENT 	0x8
-#define ERROR_EVENT				0x10
-#define ALL_EVENTS				0x3E
+
 
 /*
  *  ======== taskFxn ========
@@ -67,41 +63,19 @@ Int main()
     return(0);
 }
 
-Void StateChangeTask()
+Void UpdateState()
 {
-	UInt events;
-	while (TRUE)
+	state currentState = GetState();
+	switch (currentState)
 	{
-		events = Event_pend(StateChangeEvent, Event_Id_NONE, ALL_EVENTS, BIOS_WAIT_FOREVER);
-
-		// Determine event posted
-		if (events & ERROR_EVENT)
-		{
-			// Go into error state
-			return;
-		}
-		else if (events & CHARGE_EVENT)
-		{
-			// Go into charge state
-			return;
-		}
-		else if (events & BALANCE_EVENT)
-		{
-			return;
-		}
-		else if (events & CHARGE_BALANCE_EVENT)
-		{
-			return;
-		}
-		else if (events & WAIT_EVENT)
-		{
-			return;
-		}
-		else
-		{
-			// What event just fired? Error
-			return;
-		}
+		case WAIT:
+			// Check for problems.
+			// Perform wait routine here
+			break;
+		case CHARGE:
+			// Perform safety checks
+			// Update structures
+			break;
 	}
 }
 
