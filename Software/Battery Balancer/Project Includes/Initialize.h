@@ -29,6 +29,9 @@
 // @todo: Documentation
 Void HardwareInit();
 
+Void SoftwareInit();
+
+
 
 
 #endif /* INCLUDE_INITIALIZE_H_ */

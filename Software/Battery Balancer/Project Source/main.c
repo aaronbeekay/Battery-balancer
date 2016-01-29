@@ -8,13 +8,6 @@
 
 #include "Common_Includes.h"
 
-#include <xdc/runtime/Error.h>
-#include <xdc/runtime/System.h>
-#include <xdc/cfg/global.h> 				//header file for statically defined objects/handles
-
-#include <ti/sysbios/BIOS.h>				//mandatory - if you call APIs like BIOS_start()
-#include <ti/sysbios/knl/Task.h>
-
 //-----------------------------------------
 // ControlSuite Header Files
 //-----------------------------------------
@@ -45,7 +38,7 @@ Void taskFxn(UArg a0, UArg a1)
 Int main()
 { 
 	HardwareInit();
-
+	SoftwareInit();
 	// @todo: Determine if I should keep default project code
     Task_Handle task;
     Error_Block eb;

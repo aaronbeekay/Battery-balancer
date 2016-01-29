@@ -14,6 +14,7 @@
 
 #include "Initialize.h"
 #include "GPIO.h"
+#include "CAN.h"
 
 //-----------------------------------------------------------------------
 // Global variables
@@ -57,7 +58,12 @@ void HardwareInit()
 	Gpio_Init();
 	// @todo: I2C setup
 	// @todo: CAN setup
+	CAN_Init();
 	return;
 }
 
+Void SoftwareInit()
+{
 
+	return;
+}
