@@ -2,3 +2,4 @@ Model/slprj
 *.autosave
 *.mexmaci64
 ~$*.xlsx
+*_UpdatePartNumAttributes.scr
