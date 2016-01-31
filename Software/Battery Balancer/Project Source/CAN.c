@@ -440,8 +440,7 @@ static void SetupMailboxes(void)
 
 Void CAN_Receive_Interrupt()
 {
-	ECanaShadow.CANGIF1.bit.MIV1 =  ECanaRegs.CANGIF1.bit.MIV1;
-	Uint16 rcvd_box = ECanaShadow.CANGIF1.bit.MIV1;
+	Uint32 rcvd_box =  ECanaRegs.CANGIF1.bit.MIV1;
 	Uint32 * CAN_Data_Address = 0x00006104 + (8 * rcvd_box);
 
 	// CAN MDL_Low Word Address
@@ -453,11 +452,13 @@ Void CAN_Receive_Interrupt()
 	// CAN MDH_High Word Address
 	Cell_Voltages[mailboxes[rcvd_box].Active_Cells.CellSel4-1] = (*(CAN_Data_Address + 1) >> 16);
 
-
 	EALLOW;
 	// Disable received mailbox
-	ECanaRegs.CANME.all = ECanaShadow.CANME.all ^ (1 << rcvd_box);
-
+	ECanaRegs.CANME.all ^= (1UL << rcvd_box);
+    while (ECanaRegs.CANES.bit.CCE != 0UL)
+    {
+    	// Wait..
+    }
 	// Swap MSGID
 	Uint32 * CAN_MSGID_Address = 0x00006100 + (8 * rcvd_box);
 	*(CAN_MSGID_Address+1) = 0x18;
@@ -479,7 +480,7 @@ Void CAN_Receive_Interrupt()
 	}
 	// Re-enable mailbox with new MSGID
 	mailboxes[rcvd_box].ID1_Active = !mailboxes[rcvd_box].ID1_Active;
-	ECanaRegs.CANME.all = ECanaShadow.CANME.all ^ (1 << rcvd_box);
+	ECanaRegs.CANME.all ^= (1UL << rcvd_box);
 	ECanaRegs.CANRMP.all |= (1UL < rcvd_box);
 
 	EDIS;
@@ -505,5 +506,6 @@ Void SendCAN()
 
 	ECanaShadow.CANTA.all = system_mask;
 	ECanaRegs.CANTA.all = ECanaShadow.CANTA.all;						//clear flag
+
 	EDIS;
 }
