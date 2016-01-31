@@ -15,6 +15,7 @@
 #include "Initialize.h"
 #include "GPIO.h"
 #include "CAN.h"
+#include "Cell_Status.h"
 
 //-----------------------------------------------------------------------
 // Global variables
@@ -25,6 +26,10 @@ extern Uint16 RamfuncsLoadEnd;
 extern Uint16 RamfuncsRunStart;
 extern Uint16 RamfuncsLoadSize;
 */
+
+cell_voltage Cell_Voltages[CELLS_IN_SERIES];
+
+
 //-----------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------
@@ -38,13 +43,16 @@ extern Uint16 RamfuncsLoadSize;
 // Value used to set GPxMUXy. Using this value with set the pin as a GPIO
 #define GPIO_MUX	0
 
+
 //-----------------------------------------------------------------------
 // Private variables
 //-----------------------------------------------------------------------
 
 //-----------------------------------------------------------------------
-// Private (Internal) functions
+// Private (Internal) function definitions
 //-----------------------------------------------------------------------
+
+void Cell_Voltages_Init(void);
 
 //-----------------------------------------------------------------------
 // Public functions
@@ -64,6 +72,16 @@ void HardwareInit()
 
 Void SoftwareInit()
 {
-
+	Cell_Voltages_Init();
 	return;
+}
+
+
+void Cell_Voltages_Init(void)
+{
+	int i;
+	for (i = 0; i < CELLS_IN_SERIES; i++)
+	{
+		Cell_Voltages[i] = -1;	// Set to negative value until BIM updates
+	}
 }

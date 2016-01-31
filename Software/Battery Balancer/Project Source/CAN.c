@@ -7,10 +7,13 @@
 
 #include "CAN.h"
 #include "Cell_Status.h"
+#include "DSP2803x_Device.h"
 
 //-----------------------------------------------------------------------
 // Global variables
 //-----------------------------------------------------------------------
+
+extern cell_voltage Cell_Voltages[CELLS_IN_SERIES];
 
 //-----------------------------------------------------------------------
 // Constants
@@ -57,7 +60,7 @@ static can_bim_mailbox_t mailboxes[BIM_MAILBOXES] =
 
 static void ClearMailboxes(void);
 
-static void InitECana(void);
+void InitECana(void);
 
 static void SetupMailboxes(void);
 
@@ -81,16 +84,19 @@ void CAN_Init(void)
 	InitECana();
 
 	ClearMailboxes();
-	ECanaShadow.CANMIM.all = 0;
-	ECanaShadow.CANMIL.all = 0;
+
 	ECanaShadow.CANGIM.all = 0;
 	ECanaShadow.CANGAM.bit.AMI = 0; //must be standard
 	ECanaShadow.CANGIM.bit.I1EN = 1;  // enable I1EN
 	ECanaShadow.CANMD.all = ECanaRegs.CANMD.all;
 	ECanaShadow.CANME.all = ECanaRegs.CANME.all;
 
+	EDIS;
 	SetupMailboxes();
 
+	EALLOW;
+	ECanaShadow.CANMIM.all = 0x1FFFF;	// Which mailboxes to toggle interrupt on
+	ECanaShadow.CANMIL.all = 0x1FFFF;
 	ECanaRegs.CANGAM.all = ECanaShadow.CANGAM.all;
 	ECanaRegs.CANGIM.all = ECanaShadow.CANGIM.all;
 	ECanaRegs.CANMIM.all = ECanaShadow.CANMIM.all;
@@ -179,14 +185,12 @@ static void ClearMailboxes(void)
 	ECanaMboxes.MBOX31.MDH.all = 0;
 }
 
-static void InitECana(void)
+void InitECana(void)
 {
 	/* Create a shadow register structure for the CAN control registers. This is
 	needed, since only 32-bit access is allowed to these registers. 16-bit access
 	to these registers could potentially corrupt the register contents or return
 	false data. */
-
-	struct ECAN_REGS ECanaShadow;
 
     EALLOW;     // EALLOW enables access to protected bits
 
@@ -310,14 +314,14 @@ static void InitECana(void)
 static void SetupMailboxes(void)
 {
 
-	ECanaMboxes.MBOX2.MSGCTRL.all = 0x18; 	// DLC 8, RTR Transmit
+	ECanaMboxes.MBOX0.MSGCTRL.all = 0x18; 	// DLC 8, RTR Transmit
 	ECanaMboxes.MBOX0.MSGID.bit.STDMSGID = (mailboxes[0].ID1_Active)
 			? mailboxes[0].ID1
 			: mailboxes[0].ID2;
 	ECanaShadow.CANMD.bit.MD0 = 1; 			//receive
 	ECanaShadow.CANME.bit.ME0 = 1;			//enable
 
-	ECanaMboxes.MBOX2.MSGCTRL.all = 0x18; 	// DLC 8, RTR Transmit
+	ECanaMboxes.MBOX1.MSGCTRL.all = 0x18; 	// DLC 8, RTR Transmit
 	ECanaMboxes.MBOX1.MSGID.bit.STDMSGID = (mailboxes[1].ID1_Active)
 			? mailboxes[1].ID1
 			: mailboxes[1].ID2;
@@ -438,22 +442,25 @@ Void CAN_Receive_Interrupt()
 {
 	ECanaShadow.CANGIF1.bit.MIV1 =  ECanaRegs.CANGIF1.bit.MIV1;
 	Uint16 rcvd_box = ECanaShadow.CANGIF1.bit.MIV1;
-	Uint32 * CAN_Data_Address = 0x6104 + (8 * rcvd_box);
+	Uint32 * CAN_Data_Address = 0x00006104 + (8 * rcvd_box);
 
 	// CAN MDL_Low Word Address
-	Cell_Voltages[mailboxes[rcvd_box].Active_Cells.CellSel1] = (*CAN_Data_Address);
+	Cell_Voltages[mailboxes[rcvd_box].Active_Cells.CellSel1-1] = (*CAN_Data_Address);
 	// CAN MDL_High Word Address
-	Cell_Voltages[mailboxes[rcvd_box].Active_Cells.CellSel2] = (*(CAN_Data_Address + 2));
+	Cell_Voltages[mailboxes[rcvd_box].Active_Cells.CellSel2-1] = (*(CAN_Data_Address) >> 16);
 	// CAN MDH_Low Word Address
-	Cell_Voltages[mailboxes[rcvd_box].Active_Cells.CellSel3] = (*(CAN_Data_Address + 4));
+	Cell_Voltages[mailboxes[rcvd_box].Active_Cells.CellSel3-1] = (*(CAN_Data_Address + 1));
 	// CAN MDH_High Word Address
-	Cell_Voltages[mailboxes[rcvd_box].Active_Cells.CellSel4] = (*(CAN_Data_Address + 6));
+	Cell_Voltages[mailboxes[rcvd_box].Active_Cells.CellSel4-1] = (*(CAN_Data_Address + 1) >> 16);
 
+
+	EALLOW;
 	// Disable received mailbox
 	ECanaRegs.CANME.all = ECanaShadow.CANME.all ^ (1 << rcvd_box);
 
 	// Swap MSGID
-	Uint32 * CAN_MSGID_Address = 0x6100 + (8 * rcvd_box);
+	Uint32 * CAN_MSGID_Address = 0x00006100 + (8 * rcvd_box);
+	*(CAN_MSGID_Address+1) = 0x18;
 	if (mailboxes[rcvd_box].ID1_Active)
 	{
 		*CAN_MSGID_Address = ((Uint32)mailboxes[rcvd_box].ID2) << 18;
@@ -470,9 +477,33 @@ Void CAN_Receive_Interrupt()
 		mailboxes[rcvd_box].Active_Cells.CellSel3 -= 4;
 		mailboxes[rcvd_box].Active_Cells.CellSel4 -= 4;
 	}
-
 	// Re-enable mailbox with new MSGID
-	ECanaRegs.CANME.all = ECanaShadow.CANME.all;
+	mailboxes[rcvd_box].ID1_Active = !mailboxes[rcvd_box].ID1_Active;
+	ECanaRegs.CANME.all = ECanaShadow.CANME.all ^ (1 << rcvd_box);
+	ECanaRegs.CANRMP.all |= (1UL < rcvd_box);
+
+	EDIS;
 }
 
+Void SendCAN()
+{
+	Uint32 system_mask = 0x1FFFF;
+	EALLOW;
+	ECanaShadow.CANMC.all = ECanaRegs.CANMC.all;
+	if (ECanaShadow.CANMC.bit.CCR == 1)
+	{
+		//BUS_OFF();
+	}
+	ECanaShadow.CANTRS.all = system_mask;
+	ECanaRegs.CANTRS.all = ECanaShadow.CANTRS.all;
 
+	do
+	{
+		ECanaShadow.CANTA.all = ECanaRegs.CANTA.all;
+	}
+	while((ECanaShadow.CANTA.all & system_mask) != 0); //wait to send or hit stop watch
+
+	ECanaShadow.CANTA.all = system_mask;
+	ECanaRegs.CANTA.all = ECanaShadow.CANTA.all;						//clear flag
+	EDIS;
+}

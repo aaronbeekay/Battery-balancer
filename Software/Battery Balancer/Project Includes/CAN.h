@@ -80,5 +80,6 @@ Void CAN_Init();
 // Setup current as ECANA_INT1 like MCN_Software
 Void CAN_Receive_Interrupt();
 
+Void SendCAN();
 
 #endif /* PROJECT_INCLUDES_CAN_H_ */

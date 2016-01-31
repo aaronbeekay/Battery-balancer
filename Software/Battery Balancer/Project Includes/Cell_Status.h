@@ -21,7 +21,7 @@
 
 typedef Int16 cell_voltage;
 
-cell_voltage Cell_Voltages[CELLS_IN_SERIES];
+extern cell_voltage Cell_Voltages[CELLS_IN_SERIES];
 
 //---------------------------------------------------------------------------------
 

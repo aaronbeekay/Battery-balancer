@@ -37,6 +37,14 @@ Void taskFxn(UArg a0, UArg a1)
  */
 Int main()
 { 
+	// Init PLL, watchdog, periph clocks - see F2806x_SysCtrl.c file
+	// Clock frequency set to 90 MHz - see F2806x_Examples.h
+	InitSysCtrl();
+
+	// Copy InitFlash fxn to RAM and run it - sets flash wait states for 90MHz
+	//memcpy(&RamfuncsRunStart,&RamfuncsLoadStart,(unsigned long)&RamfuncsLoadSize);
+	//InitFlash();
+
 	HardwareInit();
 	SoftwareInit();
 	// @todo: Determine if I should keep default project code
