@@ -3,3 +3,6 @@ Model/slprj
 *.mexmaci64
 ~$*.xlsx
 *_UpdatePartNumAttributes.scr
+*.gpi
+*.dri
+*.pro
