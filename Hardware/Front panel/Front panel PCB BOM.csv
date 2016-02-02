@@ -1,0 +1,31 @@
+Qty,Description,Manufacturer,Mfg part,Vendor,Vendor part,Designator,Cost
+2,"Micro-Fit header, 6pos, vertical, through-hole, w/PCB polarizing peg, gold",Molex,43045-0613,NW,09H1482,"X12, X13",1.7
+1,"Micro-Clasp header, 10pos, 2 rows, vertical, through-hole",Molex,55917-1010,NW,28M9461,X14,0.5
+1,"XH connector header, 2.5mm pitch, through-hole, vertical, 2 positions",JST,B2B-XH-A,DK,455-2247-ND,X17,0.15
+5,"XH connector header, 2.5mm pitch, through-hole, vertical, 4 positions",JST,B4B-XH-A,NW,73M9436,"X3, X4, X5, X6, X11",0.162
+1,"Schottky rectifier, 30V, 1A, SMA",Diodes Inc,B130-13-F,DK,B130-FDICT-ND,D1,0.43
+1,"NPN transistor, Darlington pair, TO-92",Diodes Inc,BCX38C,DK,BCX38C-ND,T1,0.55
+4,"N-channel MOSFET, 50V Vds, 220 mA Ids, SOT-23",Fairchild Semiconductor,BSS138,NW,58K8769,"Q1, Q2, Q4, Q9",0.149
+1,"IC, LDO voltage regulator, 1.25V-13.8V, SOT223-3",Texas Instruments,LM1117MP-ADJ/NOPB,NW,82K9671,IC3,0.555
+1,"Cylindrical power connector, barrel jack, 5.5x2.1mm, PCB mount, right angle",CUI Inc,PJ-002A,DK,CP-002A-ND,X16,0.93
+1,"XH connector header, 2.5mm pitch, through-hole, right-angle, 2 positions",JST,S2B-XH-A,DK,455-2257-ND,X15,0.17
+1,"I/O expander, 16bit, I2C, with interrupt",Texas Instruments,TCA9555PWR,DK,296-24827-1-ND,IC1,1.95
+1,"Capacitor, Ceramic, .1uF 25V 10% 0603 X7R",TDK,C1608X7R1E104K080AA,DK,445-1316-1-ND,C1,0.011
+1,"Resistor, 1.8 kohm, 0.1W, 1%, 0603",Panasonic,ERJ-3EKF1801V,NW,64R5324,R19,0.015
+6,"Resistor, 2.2k ohm, Thick Film, 100 mW, 1%, 0603",Yageo,RC0603FR-102K2L,NW,68R0123,"R11, R12, R20, R26, R27, R28",0.007
+1,"Resistor, 6.8 kohm, 0.1W, 1%, 0603",Vishay Dale,CRCW06036K80FKEA,NW,52K8640,R18,0.004
+15,"Resistor, 10k ohm 100 mW, 5%, 100ppm, 0603",Yageo,RC0603JR-1010KL,NW,68R0215,"R1, R2, R3, R4, R5, R13, R14, R15, R16, R17, R21, R22, R23, R24, R25",0.008
+1,"Capacitor, Tantalum, 10uF 20V ,CT3216",Kemet,T491A106M020AT,DK,399-5152-1-ND,C8,0.73
+5,"Capacitor, Ceramic, 47 uF, 10V, X5R, 20%, 1206",Murata,GRM31CR61A476ME15L,DK,490-5528-1-ND,"C2, C3, C4, C5, C6",0.737
+1,"Capacitor, Tantalum, 100 uF, 6.3V, 10%, 1411",AVX,TAJB107K006RNJ,NW,60R5877,C7,0.633
+5,"Resistor, 680 ohm, 0.5W, 5%, 1210",Stackpole Electronics,RMCF1210JT680R,DK,RMCF1210JT680RCT-ND,"R6, R7, R8, R9, R10",0.1
+2,"Pin header, male, 10 positions, 1 row, 0.05"" pitch, through hole, vertical, gold",Sullins Connector Solutions,GRPB101VWVN-RC,DK,S9014E-10-ND,X1-HDR1,0.748
+1,"Pin header, 2x3 positions, 2mm pitch, vertical, through hole, male, gold",Harwin,M22-2020305,Mouser,855-M22-2020305,X1-HDR3,0.601
+2,"Male pin header, 10 pos, 2mm pitch, selective gold plated",Harwin,M22-2511005,DK,952-1316-ND,X1-HDR2,0.6
+4,"P-Channel Enhancement Mode Field-Effect Transistor, -0.13 A, -50 V, SOT-23",Fairchild Semiconductor,BSS84,NW,58K8770,"Q3, Q5, Q6, Q7",0.1926
+1,"IC, single AND gate, non-inverting, SOT23-5",Texas Instruments,SN74LVC1G08DBVR,NW,76C4078,IC4,0.484
+1,"IC, Buffer, 2-bit, non-invert, open drain, SOT-23-6",Texas Instruments,SN74LVC2G07DBVR,DK,296-13494-1-ND,IC2,0.59
+5,"XH connector header, 2.5mm pitch, through-hole, vertical, 3 positions",JST,B3B-XH-A,NW,73M9431,"X2, X7, X8, X9, X10",0.162
+4,"M2 standoff, male-female, 6mm length",,STOCK,,,,
+4,M2 hex nut,,STOCK,,,,
+4,"Machine screw, M2 thread, 4mm length, pan head",,STOCK,,,,
