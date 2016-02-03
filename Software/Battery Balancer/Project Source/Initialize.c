@@ -16,6 +16,7 @@
 #include "GPIO.h"
 #include "CAN.h"
 #include "Cell_Status.h"
+#include "I2C_Coms.h"
 
 //-----------------------------------------------------------------------
 // Global variables
@@ -65,6 +66,7 @@ void HardwareInit()
 	*/
 	Gpio_Init();
 	// @todo: I2C setup
+	I2C_Init();
 	// @todo: CAN setup
 	CAN_Init();
 	return;
